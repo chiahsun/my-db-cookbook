@@ -1,0 +1,2 @@
+
+=== https://dev.mysql.com/doc/refman/9.1/en/batch-mode.html[Using MySQL in Batch Mode]
