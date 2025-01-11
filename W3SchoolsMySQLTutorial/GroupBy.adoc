@@ -1,0 +1,119 @@
+
+=== https://www.w3schools.com/mysql/mysql_groupby.asp[GROUP BY]
+
+
+https://github.com/microsoft/sql-server-samples/blob/master/samples/databases/northwind-pubs/instnwnd.sql[instnwnd.sql]
+
+[source,sql]
+---------
+mysql> CREATE DATABASE instnwnd;
+Query OK, 1 row affected (0.02 sec)
+---------
+
+[source,sql]
+---------
+mysql> USE instnwnd;
+Database changed
+---------
+
+
+[source,sql]
+---------
+mysql> CREATE TABLE Customers (
+    ->   CustomerID VARCHAR(5) NOT NULL ,
+    ->   CompanyName VARCHAR(40) NOT NULL ,
+    ->   ContactName VARCHAR(30) NULL ,
+    ->   ContactTitle VARCHAR(30) NULL ,
+    ->   Address VARCHAR(60) NULL ,
+    ->   City VARCHAR(15) NULL ,
+    ->   Region VARCHAR(15) NULL ,
+    ->   PostalCode VARCHAR(10) NULL ,
+    ->   Country VARCHAR(15) NULL ,
+    ->   Phone VARCHAR(24) NULL ,
+    ->   Fax VARCHAR(24) NULL
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+---------
+
+[source,sql]
+---------
+ DESCRIBE Customers;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| CustomerID   | varchar(5)  | NO   |     | NULL    |       |
+| CompanyName  | varchar(40) | NO   |     | NULL    |       |
+| ContactName  | varchar(30) | YES  |     | NULL    |       |
+| ContactTitle | varchar(30) | YES  |     | NULL    |       |
+| Address      | varchar(60) | YES  |     | NULL    |       |
+| City         | varchar(15) | YES  |     | NULL    |       |
+| Region       | varchar(15) | YES  |     | NULL    |       |
+| PostalCode   | varchar(10) | YES  |     | NULL    |       |
+| Country      | varchar(15) | YES  |     | NULL    |       |
+| Phone        | varchar(24) | YES  |     | NULL    |       |
+| Fax          | varchar(24) | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+11 rows in set (0.01 sec)
+---------
+
+[source,sql]
+---------
+INSERT INTO Customers VALUES('ALFKI','Alfreds Futterkiste','Maria Anders','Sales Representative','Obere Str. 57','Berlin',NULL,'12209','Germany','030-0074321','030-0076545');
+INSERT INTO Customers VALUES('ANATR','Ana Trujillo Emparedados y helados','Ana Trujillo','Owner','Avda. de la Constitución 2222','México D.F.',NULL,'05021','Mexico','(5) 555-4729','(5) 555-3745');
+INSERT INTO Customers VALUES('ANTON','Antonio Moreno Taquería','Antonio Moreno','Owner','Mataderos  2312','México D.F.',NULL,'05023','Mexico','(5) 555-3932',NULL);
+INSERT INTO Customers VALUES('AROUT','Around the Horn','Thomas Hardy','Sales Representative','120 Hanover Sq.','London',NULL,'WA1 1DP','UK','(171) 555-7788','(171) 555-6750');
+INSERT INTO Customers VALUES('BERGS','Berglunds snabbköp','Christina Berglund','Order Administrator','Berguvsvägen  8','Luleå',NULL,'S-958 22','Sweden','0921-12 34 65','0921-12 34 67');
+---------
+
+[source,sql]
+---------
+mysql> SELECT CustomerId, ContactName, ContactName, Address, City, PostalCode, Country FROM Customers;
++------------+--------------------+--------------------+--------------------------------+--------------+------------+---------+
+| CustomerId | ContactName        | ContactName        | Address                        | City         | PostalCode | Country |
++------------+--------------------+--------------------+--------------------------------+--------------+------------+---------+
+| ALFKI      | Maria Anders       | Maria Anders       | Obere Str. 57                  | Berlin       | 12209      | Germany |
+| ANATR      | Ana Trujillo       | Ana Trujillo       | Avda. de la Constitución 2222  | México D.F.  | 05021      | Mexico  |
+| ANTON      | Antonio Moreno     | Antonio Moreno     | Mataderos  2312                | México D.F.  | 05023      | Mexico  |
+| AROUT      | Thomas Hardy       | Thomas Hardy       | 120 Hanover Sq.                | London       | WA1 1DP    | UK      |
+| BERGS      | Christina Berglund | Christina Berglund | Berguvsvägen  8                | Luleå        | S-958 22   | Sweden  |
++------------+--------------------+--------------------+--------------------------------+--------------+------------+---------+
+5 rows in set (0.01 sec)
+---------
+
+
+[source,sql]
+---------
+mysql> SELECT COUNT(CustomerID), Country
+    -> FROM Customers
+    -> GROUP BY Country;
++-------------------+---------+
+| COUNT(CustomerID) | Country |
++-------------------+---------+
+|                 1 | Germany |
+|                 2 | Mexico  |
+|                 1 | UK      |
+|                 1 | Sweden  |
++-------------------+---------+
+4 rows in set (0.01 sec)
+---------
+
+[source,sql]
+---------
+mysql> SELECT COUNT(CustomerID), Country
+    -> FROM Customers
+    -> GROUP BY Country
+    -> ORDER BY COUNT(CustomerID) DESC;
++-------------------+---------+
+| COUNT(CustomerID) | Country |
++-------------------+---------+
+|                 2 | Mexico  |
+|                 1 | Germany |
+|                 1 | UK      |
+|                 1 | Sweden  |
++-------------------+---------+
+4 rows in set (0.00 sec)
+---------
+
+[source,sql]
+---------
+---------
